@@ -4,9 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="rockScissorsPaper.css">
+    <script src="https://kit.fontawesome.com/7c1106c071.js"></script>
+
     <title>Rock Paper Scissors</title>
 </head>
-<body>
+<body>   
+    <div class="heading">
+        <h1>Rock | Paper | Scissors</h1>
+    </div>
+    <div class="container">
+        <div class="scoreboard">
+            <h3 class="player">Player</h3>
+            <h3 id="computer" class="computer">Computer</h3>
+            <p id="score"></p>
+            <p id="cscore"></p>
+        </div>
+
+        <div class="choices">
+            <div id="rock" class="rock animation">
+                <i class="far fa-hand-rock" aria-hidden="true"></i>
+            </div>
+            <div id="paper" class="paper animation">
+                <i class="far fa-hand-paper" aria-hidden="true"></i>
+            </div>
+            <div id="scissors" class="scissors animation">
+                <i class="far fa-hand-scissors" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        <div id="info" class="info">
+            <p id="info-text" class="info-text"></p>
+        </div>
+
+        <div class="reset">
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
     <script src="schereSteinPapier.js"></script>
 </body>
 </html>

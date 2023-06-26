@@ -1,5 +1,8 @@
 'use strict'
 
+document.addEventListener('DOMContentLoaded', geladen); /// Das Dokument wird vollständig geladen bevor allem.
+
+
 function computerPlay() {
     let pcRoll = Math.floor(Math.random() * 3 + 1);
     /*   Computer rollt einen Wert von 1 - 3:
@@ -7,51 +10,59 @@ function computerPlay() {
             2 - Stein
             3 - Papier
     */
+
+    /// b.) Anzeige was der Computer spielt:
+    const computerHand = document.getElementById('computer');
+
     if (pcRoll == 1) {
         pcRoll = "schere";
+        computerHand.innerHTML = 'Computer <i class="far fa-hand-scissors" aria-hidden="true"></i>';
     }
     else if (pcRoll == 2) {
         pcRoll = "stein";
+        computerHand.innerHTML = 'Computer <i class="far fa-hand-rock" aria-hidden="true"></i>';
     }
     else {
         pcRoll = "papier";
+        computerHand.innerHTML = 'Computer <i class="far fa-hand-paper" aria-hidden="true"></i>';
     }
     return pcRoll;
 }
 
-function playRound() { /// Funktion um den Wert des Computers mit der Eingabe des Spielers zu vergleichen
+function playRound(playerChoice) { /// Funktion um den Wert des Computers mit der Eingabe des Spielers zu vergleichen
+    const gameInfo = document.getElementById('info'); /// 4.) Infotext Element wird hereingeholt.
     let computerChoice = computerPlay();
-    let playerInputInsensitive = prompt("Schere Stein Papier!\nGeben Sie ein von:\nSchere\nStein\nPapier");
+    let playerInputInsensitive = playerChoice //prompt("Schere Stein Papier!\nGeben Sie ein von:\nSchere\nStein\nPapier");
     let playerInput = playerInputInsensitive.toLowerCase();
     let won = 0;
     /// Unentschieden:
     if (playerInput == computerChoice) {
-        console.log("Unentschieden!");
+        gameInfo.textContent = "Unentschieden!";
     }
     /// Spielergewinnbedingungen:
     else if (playerInput == "schere" && computerChoice == "papier") {
-        console.log("Du gewinnst! - Schere schneidet Papier!");
+        gameInfo.textContent = "Du gewinnst! - Schere schneidet Papier!";
         won = won + 1;
     }
     else if (playerInput == "stein" && computerChoice == "schere") {
-        console.log("Du gewinnst! - Stein schlägt Schere!");
+        gameInfo.textContent = "Du gewinnst! - Stein schlägt Schere!";
         won = won + 1;
     }
     else if (playerInput == "papier" && computerChoice == "stein") {
-        console.log("Du gewinnst! - Papier umwickelt den Stein!");
+        gameInfo.textContent = "Du gewinnst! - Papier umwickelt den Stein!";
         won = won + 1;
     }
     /// Computergewinnbedingungen:
     else if (playerInput == "schere" && computerChoice == "stein") {
-        console.log("Du hast verloren! - Stein schlägt Schere!");
+        gameInfo.textContent = "Du hast verloren! - Stein schlägt Schere!";
         won = won - 1;
     }
     else if (playerInput == "stein" && computerChoice == "papier") {
-        console.log("Du hast verloren! - Papier umwickelt den Stein!");
+        gameInfo.textContent = "Du hast verloren! - Papier umwickelt den Stein!";
         won = won - 1;
     }
     else if (playerInput == "papier" && computerChoice == "schere") {
-        console.log("Du hast verloren! - Schere schneidet Papier!");
+        gameInfo.textContent = "Du hast verloren! - Schere schneidet Papier!";
         won = won - 1;
     }
     /// Abfangen einer falschen Eingabe:
@@ -61,31 +72,109 @@ function playRound() { /// Funktion um den Wert des Computers mit der Eingabe de
     return won;
 }
 
-function game() {
+function geladen() {
     let playerWins = 0;
     let computerWins = 0;
-    while (playerWins < 5 && computerWins < 5) {
-        const whoWon = playRound();
-        ///console.log(whoWon);
+    let whoWon = 0;
+
+    /// a.) Scoreboard wird übergeben:
+    const playerScore = document.getElementById('score');
+    const computerScore = document.getElementById('cscore');
+    playerScore.textContent = playerWins;
+    computerScore.textContent = computerWins;
+    /// e.) Resetbutton:
+    const resetButton = document.getElementById('reset');
+    resetButton.addEventListener('click', () => {
+        playerWins = 0;
+        computerWins = 0;
+        whoWon = 0;
+        playerScore.textContent = playerWins;
+        computerScore.textContent = computerWins;
+    });
+
+
+    /// c.) Icons für die Spielmöglichkeiten:
+    const playerRock = document.getElementById('rock');
+    const playerPaper = document.getElementById('paper');
+    const playerScissors = document.getElementById('scissors');
+
+
+    playerRock.addEventListener('click', () => {
+        whoWon = playRound('stein')
         if (whoWon == 1) { /// Punkt für Spieler
             playerWins = playerWins + 1;
+            playerScore.textContent = playerWins;
+            playerWon(playerWins);
         }
         else if (whoWon == -1) { /// Punkt für Computer
             computerWins = computerWins + 1;
+            computerScore.textContent = computerWins;
+            computerWon(computerWins);
+        }
+
+    });
+    playerPaper.addEventListener('click', () => {
+        whoWon = playRound('papier')
+        if (whoWon == 1) { /// Punkt für Spieler
+            playerWins = playerWins + 1;
+            playerScore.textContent = playerWins;
+            playerWon(playerWins);
+        }
+        else if (whoWon == -1) { /// Punkt für Computer
+            computerWins = computerWins + 1;
+            computerScore.textContent = computerWins;
+            computerWon(computerWins);
+        }
+
+    });
+    playerScissors.addEventListener('click', () => {
+        whoWon = playRound('schere')
+        if (whoWon == 1) { /// Punkt für Spieler
+            playerWins = playerWins + 1;
+            playerScore.textContent = playerWins;
+            playerWon(playerWins);
+        }
+        else if (whoWon == -1) { /// Punkt für Computer
+            computerWins = computerWins + 1;
+            computerScore.textContent = computerWins;
+            computerWon(computerWins);
+        }
+
+    });
+
+    /// Spieler hat gewonnen:
+    function playerWon() {
+        const gameInfo = document.getElementById('info');
+        if (playerWins >= 5) {
+            gameInfo.textContent = "You win!";
+            gameInfo.style.backgroundColor = "green";
+            setTimeout(() => {
+                playerWins = 0;
+                computerWins = 0;
+                whoWon = 0;
+                playerScore.textContent = playerWins;
+                computerScore.textContent = computerWins;;
+                gameInfo.textContent = ""; 
+                gameInfo.style.backgroundColor = "lightblue";
+            }, 2000)
         }
     }
 
-    /// Entscheidung wer gewonnen hat:
-    if (playerWins == 5) {
-        document.write("Du hast gewonnen! " + playerWins + " - " + computerWins);
-        document.write("<br>Noch eine Runde?<br>Einfach game() eingeben für noch eine Runde!<br>(Spiel endet wenn du oder der Computer 5 mal gewonnen hat.)");
+    /// Computer hat gewonnen:
+    function computerWon() {
+        const gameInfo = document.getElementById('info');
+        if (computerWins == 5) {
+            gameInfo.textContent = "You lose!";
+            gameInfo.style.backgroundColor = "red";
+            setTimeout(() => {
+                playerWins = 0;
+                computerWins = 0;
+                whoWon = 0;
+                playerScore.textContent = playerWins;
+                computerScore.textContent = computerWins;
+                gameInfo.textContent = "";    
+                gameInfo.style.backgroundColor = "lightblue";
+            }, 2000)
+        }
     }
-    else {
-        document.write("Du hast leider verloren. " + computerWins + " - " + playerWins);
-        document.write("<br>Noch eine Runde?<br>Einfach game() eingeben für noch eine Runde!<br>(Spiel endet wenn du oder der Computer 5 mal gewonnen hat.)");
-    }
-
 }
-
-document.write("Starten Sie ein Spiel Schere-Stein-Papier mithilfe von game()!<br>(Spiel endet wenn du oder der Computer 5 mal gewonnen hat.)");
-//game();

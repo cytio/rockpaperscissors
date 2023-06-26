@@ -1,0 +1,89 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+}
+
+.heading {
+    background-color: lightslategray;
+    color: white;
+    height: 100px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 900px;
+    margin: 50px auto;
+}
+
+.container .scoreboard {
+    width: 500px;
+    background-color: lightskyblue;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 5px;
+    margin:auto;
+}
+.container .scoreboard .player {
+    order: 0;
+    justify-self: center;
+}
+.container .scoreboard .computer {
+    order: 1;
+    justify-self: center;
+}
+.container .scoreboard #score {
+    order:2;
+    color: green;
+    justify-self: center;
+    font-size: 28px;
+}
+.container .scoreboard #cscore {
+    order:3;
+    color: red;
+    justify-self: center;
+    font-size: 28px;
+}
+
+.container .choices {
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    font-size: 70pt;
+    color:gray;
+}
+.container .choices .rock {
+    cursor: pointer;
+}
+.container .choices .paper {
+    cursor: pointer;
+}
+.container .choices .scissors {
+    cursor: pointer;
+}
+
+.container .info {
+    width: 700px;
+    height: 200px;
+    margin: 50px auto;
+    border-radius: 5px;
+    background-color: lightblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+}
+
+.container .reset {
+    text-align: center;
+}
+.container .reset button {
+    width: 150px;
+    height: 50px;
+    background-color: lightcoral;
+    border: solid 5px black;
+    color:white;
+}
+
